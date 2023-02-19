@@ -32,4 +32,6 @@ RUN ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" \
 COPY files/.zshrc /$HOME/
 COPY files/.gitconfig /$HOME/
 
+RUN zsh
+
 WORKDIR $HOME
