@@ -3,7 +3,7 @@ FROM dev-ubuntu:latest
 ENV NVM_DIR=$HOME/.nvm
 ENV NODE_VERSION=16.13.1
 
-RUN apt update
+RUN sudo apt update
 
 RUN \
 	for PACKAGE_NAME in \
