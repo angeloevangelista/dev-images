@@ -13,6 +13,6 @@ docker run -it \
 	--name dev-ubuntu \
 	--network dev-bridge \
 	-v $SOURCE_CODE_PATH:/dev-volume \
-	-v $(echo ~/.ssh):/home/dev-angelo/.ssh/:ro \
+	-v $(echo ~/.ssh):/home/dev-$(whoami)/.ssh/:ro \
 	-d dev-ubuntu:latest
 ```
