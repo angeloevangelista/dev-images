@@ -1,37 +1,38 @@
 FROM ubuntu:22.04
 
-ENV USER=dev-angelo
-ENV HOME=/home/$USER
-ENV ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
+ARG USER=user
 
-RUN apt update
+ENV	USERNAME=dev-$USER
+ENV	HOME=/home/$USERNAME
 
-RUN \
+ENV	\
+	ZSH_CUSTOM=$HOME/.oh-my-zsh/custom \
+	ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
+
+RUN apt update && \
 	for PACKAGE_NAME in \
-	sudo git curl wget zsh ;\
-	do apt install $PACKAGE_NAME -y; done
+	sudo openssh-client git curl ca-certificates wget zsh ;\
+	do apt install $PACKAGE_NAME -y --no-install-recommends; done
 
-RUN useradd -d $HOME -ms /bin/bash $USER
-RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN useradd -d $HOME -ms /bin/bash $USERNAME
+RUN echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-USER $USER
+USER $USERNAME
 
 WORKDIR $HOME
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-RUN zsh
-
-RUN git clone https://github.com/spaceship-prompt/spaceship-prompt.git \
+RUN \
+	git clone https://github.com/spaceship-prompt/spaceship-prompt.git \
 	"$ZSH_CUSTOM/themes/spaceship-prompt" \
-	--depth=1
-
-RUN ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" \
+	--depth=1 && \
+	ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" \
 	"$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
 COPY files/.zshrc /$HOME/
 COPY files/.gitconfig /$HOME/
 
-RUN zsh
+RUN git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
 WORKDIR $HOME
