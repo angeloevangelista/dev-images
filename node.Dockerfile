@@ -3,17 +3,15 @@ FROM dev-ubuntu:latest
 ENV NVM_DIR=$HOME/.nvm
 ENV NODE_VERSION=16.13.1
 
-RUN sudo apt update
-
-RUN \
+RUN sudo apt update && \
 	for PACKAGE_NAME in \
 	gnupg ;\
-	do sudo apt install $PACKAGE_NAME -y; done
+	do sudo apt install $PACKAGE_NAME -y --no-install-recommends; done
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && \
 	echo "export NVM_DIR=$NVM_DIR" >> $HOME/.zshrc && \
-	echo "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc && \
-	echo "[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"" >> $HOME/.zshrc
+	echo "[ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh" >> $HOME/.zshrc && \
+	echo "[ -s $NVM_DIR/bash_completion ] && \. $NVM_DIR/bash_completion" >> $HOME/.zshrc
 
 RUN	. $NVM_DIR/nvm.sh && \
 	nvm install $NODE_VERSION && \
