@@ -6,6 +6,7 @@ ENV LC_CTYPE=en_US.UTF-8
 ENV	HOME=/home/$USER_NAME
 ENV	WWW=$HOME/www
 ENV	ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
+ENV PATH=$PATH:$HOME/.vscode-server/bin/*/bin
 
 RUN \
 	apt update && apt install -y --no-install-recommends \
