@@ -1,10 +1,7 @@
-FROM dev-ubuntu:latest
+FROM angeloevangelista/dev-ubuntu:latest
 
-RUN sudo apt update
-
-RUN sudo apt update && \
-	for PACKAGE_NAME in \
-	python3.11 ;\
-	do sudo apt install $PACKAGE_NAME -y --no-install-recommends; done
+RUN \
+	sudo apt update && sudo apt install -y --no-install-recommends \
+	python3.11
 
 WORKDIR $HOME

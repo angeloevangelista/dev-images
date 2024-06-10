@@ -5,14 +5,15 @@
 ```bash
 make ubuntu
 
-export SOURCE_CODE_PATH=$www
+export SSH_PATH=$(echo ~/.ssh)
+export SOURCE_CODE_PATH=$(pwd)
 
 docker network create --driver bridge dev-bridge
 
 docker run -it \
 	--name dev-ubuntu \
 	--network dev-bridge \
-	-v $SOURCE_CODE_PATH:/dev-volume \
-	-v $(echo ~/.ssh):/home/dev-$(whoami)/.ssh/:ro \
-	-d dev-ubuntu:latest
+	--volume $SOURCE_CODE_PATH:/home/dev-42/www \
+	--volume $SSH_PATH:/home/dev-42/.ssh/:ro \
+	-d angeloevangelista/dev-ubuntu:latest
 ```

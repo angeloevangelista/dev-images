@@ -1,6 +1,3 @@
-[user]
-  name = Angelo Evangelista
-  email = angeloevan.ane@gmail.com
 [core]
   editor = code
   excludesfile = ~/gitignore

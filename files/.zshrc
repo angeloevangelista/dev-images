@@ -21,7 +21,7 @@ SPACESHIP_PROMPT_ORDER=(
 
 SPACESHIP_USER_SHOW=always
 SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_CHAR_SYMBOL="➔ "
+SPACESHIP_CHAR_SYMBOL="➜ "
 # ➜ ➔ ➘ ➙ ➚ ➛ ➝ ➞ ⇒ ⊶ ⋗ ✕
 SPACESHIP_CHAR_SUFFIX=""
 
@@ -42,3 +42,23 @@ zinit light-mode for \
 	zdharma/fast-syntax-highlighting \
 	zsh-users/zsh-autosuggestions \
 	zsh-users/zsh-completions
+
+function configure_git_user() {
+	if [ -z "$SKIP_GIT_USER_CONFIG" ] && [ -f ~/.gitconfig ] && ! grep -q '^\[user\]' ~/.gitconfig; then
+		echo "Howdy, champ! Are you Angelo or not? (Y/N)"
+
+		read -r -k 1 YN
+
+		if [[ $YN =~ [Yy] ]]; then
+			git config --global user.name "Angelo Evangelista"
+			git config --global user.email "angeloevan.ane@gmail.com"
+		else
+			git config --global user.name "dev-42"
+			git config --global user.email "dev-42@mail.com"
+		fi
+
+		echo "\nHave a great day, sir!"
+	fi
+}
+
+configure_git_user
