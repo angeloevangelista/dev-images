@@ -1,0 +1,30 @@
+[core]
+  editor = code
+  excludesfile = ~/gitignore
+  quotepath = false
+[color]
+  status = auto
+  branch = auto
+  interactive = auto
+  diff = auto
+[instaweb]
+  httpd = webrick
+  port = 8000
+[git-tmbundle "log"]
+  limit = 10
+[mergetool]
+  keepBackup = true
+[pretty]
+  pretty-history = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+[alias]
+  undo = reset --soft --keep HEAD^
+  unstage = reset HEAD
+  lasttag = !sh -c 'git log --simplify-by-decoration --decorate=short --tags --format="%H" |head -1'
+  wtf = !git-wtf
+  username = config --get user.name
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+[mergetool "sourcetree"]
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true

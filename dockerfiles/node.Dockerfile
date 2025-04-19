@@ -1,4 +1,4 @@
-FROM angeloevangelista/dev-ubuntu:latest
+FROM angeloevangelista/dev-ubuntu:local
 
 ENV NVM_DIR=$HOME/.nvm
 ENV NODE_VERSION=16.13.1

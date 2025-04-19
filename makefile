@@ -1,25 +1,33 @@
-repository=angeloevangelista
+repository_owner=angeloevangelista
 
 ubuntu:
-	docker build \
+	docker buildx build \
+	. \
 	--no-cache \
-	--file ubuntu.Dockerfile \
-	--tag angeloevangelista/dev-ubuntu:latest .
+	--platform linux/amd64,linux/arm64 \
+	--file ./dockerfiles/ubuntu.Dockerfile \
+	--tag $(repository_owner)/dev-ubuntu:local
 
 go: ubuntu
-	docker build \
+	docker buildx build \
+	. \
 	--no-cache \
-	--file go.Dockerfile \
-	--tag angeloevangelista/dev-go:latest .
+	--platform linux/amd64,linux/arm64 \
+	--file ./dockerfiles/go.Dockerfile \
+	--tag $(repository_owner)/dev-go:local
 
 node: ubuntu
-	docker build \
+	docker buildx build \
+	. \
 	--no-cache \
-	--file node.Dockerfile \
-	--tag angeloevangelista/dev-node:latest .
+	--platform linux/amd64,linux/arm64 \
+	--file ./dockerfiles/node.Dockerfile \
+	--tag $(repository_owner)/dev-node:local
 
 python: ubuntu
-	docker build \
+	docker buildx build \
+	. \
 	--no-cache \
-	--file python.Dockerfile \
-	--tag angeloevangelista/dev-python:latest .
+	--platform linux/amd64,linux/arm64 \
+	--file ./dockerfiles/python.Dockerfile \
+	--tag $(repository_owner)/dev-python:local

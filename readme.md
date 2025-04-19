@@ -15,7 +15,7 @@ docker run -it \
 	--network dev-bridge \
 	--volume $SOURCE_CODE_PATH:/home/dev-42/www \
 	--volume $SSH_PATH:/home/dev-42/.ssh/:ro \
-	-d angeloevangelista/dev-ubuntu:latest
+	-d angeloevangelista/dev-ubuntu:local
 ```
 
 ## Dev container experiment
@@ -27,7 +27,7 @@ xhost +local:*
 # xhost -local:*
 
 docker build . \
-	--tag dev-container:latest \
+	--tag dev-container:local \
 	--file dev-container.Dockerfile \
 	--no-cache
 
@@ -36,5 +36,5 @@ docker run -it --rm \
   --env DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
   --network "none" \
-  dev-container:latest
+  dev-container:local
 ```

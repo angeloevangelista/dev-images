@@ -1,11 +1,10 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.10
 
 ARG USER_NAME=dev-42
 
 ENV LC_CTYPE=en_US.UTF-8
 ENV	HOME=/home/$USER_NAME
 ENV	WWW=$HOME/www
-ENV	ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 ENV PATH=$PATH:$HOME/.vscode-server/bin/*/bin
 
 RUN \
@@ -22,18 +21,14 @@ USER $USER_NAME
 
 WORKDIR $HOME
 
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN bash -c "$(\
+	curl --fail --show-error --silent \
+	--location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh \
+)"
 
 RUN sudo chsh -s /usr/bin/zsh $USER_NAME
 
-RUN \
-	git clone https://github.com/spaceship-prompt/spaceship-prompt.git \
-	"$ZSH_CUSTOM/themes/spaceship-prompt" \
-	--depth=1 && \
-	ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" \
-	"$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-
-COPY --chown=$USER_NAME files/.zshrc $HOME
-COPY --chown=$USER_NAME files/.gitconfig $HOME
+COPY --chown=$USER_NAME shared/.zshrc $HOME
+COPY --chown=$USER_NAME shared/.gitconfig $HOME
 
 RUN SKIP_GIT_USER_CONFIG=1 zsh $HOME/.zshrc
